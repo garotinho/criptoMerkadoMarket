@@ -1,0 +1,12 @@
+ENVIRONMENT='demo'
+URL='url-demo.com'
+HOST_DOMAIN='https://dicapi-demo.web.app'
+
+APIKEY='AIzaSyDJs70fZ6Jj0YlySJLI2KotIEBCQgEL7po'
+AUTHDOMAIN='criptomerkado-demo.firebaseapp.com'
+PROJECTID='criptomerkado-demo'
+STORAGEBUCKET='criptomerkado-demo.appspot.com'
+MESSAGINGSENDERID='837731207726'
+APPID='1:837731207726:web:1b8a8f0fd00ab411adadbf'
+MEASUREMENTID='G-ZRRRZ5HCQR'
+APPCHECK='168AFA6A-ABF5-42E9-87E2-824854BF8B9D'

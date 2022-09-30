@@ -1,0 +1,11 @@
+ENVIRONMENT='prod'
+URL='url-prod.com'
+HOST_DOMAIN='https://dicapi.shop'
+
+APIKEY='AIzaSyDENcNbT6YF5Muqt3FLQN9KksTOIpVYkb8'
+AUTHDOMAIN='criptomerkado.firebaseapp.com'
+PROJECTID='criptomerkado'
+STORAGEBUCKET='criptomerkado.appspot.com'
+MESSAGINGSENDERID='287242252413'
+APPID='1:287242252413:web:26c9af4ab4e16634324114'
+MEASUREMENTID='G-VSFMB6HPL9'

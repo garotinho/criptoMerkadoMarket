@@ -1,0 +1,34 @@
+{
+  "hosting": [
+    {
+      "predeploy": [
+        "rm -rf public/* && mkdir -p public/_nuxt && cp -r .nuxt/dist/client/ public/_nuxt && cp -a static/. public/"
+      ],
+      "public": "public",
+      "site": "market-dev-vue",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "function": "ssrapp"
+        }
+      ]
+    },
+    {
+      "predeploy": [
+        "rm -rf public/* && mkdir -p public/_nuxt && cp -r .nuxt/dist/client/ public/_nuxt && cp -a static/. public/"
+      ],
+      "public": "public",
+      "site": "criptomerkado",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ]
+    }
+  ]
+}
