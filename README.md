@@ -1,4 +1,4 @@
-# dicapi
+# CriptoMerkado Market
 
 ## Build Setup
 
