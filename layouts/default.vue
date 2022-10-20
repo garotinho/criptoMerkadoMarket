@@ -1,7 +1,7 @@
 <template>
   <div>
     <nuxt id="body-content"/>
-    <layoutSetting/>
+    <!-- <layoutSetting/> -->
     <div class="tap-top top-cls" v-scroll-to="'#body-content'">
       <div>
           <i class="fa fa-angle-double-up"></i>
@@ -19,7 +19,7 @@ export default {
     }
   },
   components: {
-    layoutSetting
+    // layoutSetting
   },
   mounted() {
     this.$nextTick(() => {

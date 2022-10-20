@@ -49,53 +49,88 @@
     </b-alert>
   </div>
 </template>
-<script type="text/javascript">
-import productBox1 from '../../../../components/product-box/product-box1'
-export default {
-  props: ['products', 'category'],
+<script lang="ts">
+import { Vue, Component, Emit, Prop } from 'nuxt-property-decorator'
+import { ProductModel } from '~/static/models/ProductModel'
+import productBox1 from '../../../../components/product-box/product-box1.vue'
+
+@Component({
   components: {
     productBox1
   },
-  data() {
-    return {
-      title: 'special products',
-      subtitle: 'exclusive products',
-      showCart: false,
-      showquickviewmodel: false,
-      showcomapreModal: false,
-      quickviewproduct: {},
-      comapreproduct: {},
-      cartproduct: {},
-      dismissSecs: 5,
-      dismissCountDown: 0
-    }
-  },
-  methods: {
-    getCategoryProduct(collection) {
-      return this.products.filter((item) => {
-        if (item.collection.find(i => i === collection)) {
-          return item
-        }
-      })
-    },
-    alert(item) {
-      this.dismissCountDown = item
-    },
-    showCartModal(item, productData) {
-      this.showCart = item
-      this.cartproduct = productData
-      this.$emit('openCart', this.showCart, this.cartproduct)
-    },
-    showquickview(item, productData) {
-      this.showquickviewmodel = item
-      this.quickviewproduct = productData
-      this.$emit('openQuickview', this.showquickviewmodel, this.quickviewproduct)
-    },
-    showcomparemodal(item, productData) {
-      this.showcomapreModal = item
-      this.comapreproduct = productData
-      this.$emit('openCompare', this.showcomapreModal, this.comapreproduct)
-    }
+})
+export default class FashionProductTab extends Vue {
+  title: string = 'special products'
+  subtitle: string = 'exclusive products'
+
+  showCart: boolean = false
+  cartproduct: ProductModel = {} as ProductModel
+  // @Prop({ type: Boolean, required: false }) showCart!: false
+  @Prop({ type: Boolean, required: false }) showquickviewmodel!: false
+  @Prop({ type: Boolean, required: false }) showcomapreModal!: false
+  @Prop({ type: Object, required: false }) quickviewproduct!: {}
+  @Prop({ type: Object, required: false }) comapreproduct!: {}
+  // @Prop({ type: Object, required: false }) cartproduct!: {}
+  @Prop({ type: Number, required: false }) dismissSecs!: 5
+  @Prop({ type: Number, required: false }) dismissCountDown!: 0
+  @Prop({ type: Array, required: true }) products!: ProductModel[]
+  @Prop({ type: Array, required: true }) category!: any
+
+  getCategoryProduct(category: string) { return this.products.filter((product) => product.collection.find(i => i === category)) }
+
+  // @Emit()
+  alert(item: any) {
+    this.dismissCountDown = item
   }
+
+  @Emit('openCart')
+  showCartModal(item: any, productData: any) {
+    this.showCart = item
+    this.cartproduct = productData
+    // this.$emit('openCart', this.showCart, this.cartproduct)
+  }
+  
+  @Emit('openQuickview')
+  showquickview(item: any, productData: any) {
+    this.showquickviewmodel = item
+    this.quickviewproduct = productData
+    // this.$emit('openQuickview', this.showquickviewmodel, this.quickviewproduct)
+  }
+
+  @Emit('openCompare')
+  showcomparemodal(item: any, productData: any) {
+    this.showcomapreModal = item
+    this.comapreproduct = productData
+    // this.$emit('openCompare', this.showcomapreModal, this.comapreproduct)
+  }
+
+  // props: ['products', 'category'],
+  // methods: {
+  //   getCategoryProduct(collection) {
+  //     return this.products.filter((item) => {
+  //       if (item.collection.find(i => i === collection)) {
+  //         return item
+  //       }
+  //     })
+  //   },
+  //   alert(item) {
+  //     this.dismissCountDown = item
+  //   },
+  //   showCartModal(item, productData) {
+  //     this.showCart = item
+  //     this.cartproduct = productData
+  //     this.$emit('openCart', this.showCart, this.cartproduct)
+  //   },
+  //   showquickview(item, productData) {
+  //     this.showquickviewmodel = item
+  //     this.quickviewproduct = productData
+  //     this.$emit('openQuickview', this.showquickviewmodel, this.quickviewproduct)
+  //   },
+  //   showcomparemodal(item, productData) {
+  //     this.showcomapreModal = item
+  //     this.comapreproduct = productData
+  //     this.$emit('openCompare', this.showcomapreModal, this.comapreproduct)
+  //   }
+  // }
 }
 </script>

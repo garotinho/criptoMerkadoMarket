@@ -41,15 +41,42 @@ export default {
   plugins: [
      { src: '~/plugins/plugin.js', ssr:false },
      { src: '~/plugins/localStorage.js', ssr:false },
+     { src: '~/plugins/vuelidate.js' },
   ],
+
+  // Auto import components: https://go.nuxtjs.dev/config-components
+  components: {
+    dirs: [
+      { path: '~/components/header/', prefix: 'Header' },
+      { path: '~/components/cart-model/', prefix: 'CartModel' },
+      { path: '~/components/footer/', prefix: 'Footer' },
+      { path: '~/components/product-box/', prefix: 'Product' },
+      { path: '~/components/widget/', prefix: 'Widget' },
+    ]
+  },
+  
   /*
   ** Nuxt.js modules
   */
   modules: [
     // Doc: https://axios.nuxtjs.org/usage
+    '@nuxt/content',
+    ['nuxt-lazy-load', { defaultImage: '/icon/loading.gif' }],
     'bootstrap-vue/nuxt',
     '@nuxtjs/axios',
     'vue-scrollto/nuxt'
+  ],
+
+  // Content module configuration: https://go.nuxtjs.dev/config-content
+  content: {},
+
+  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
+  buildModules: [
+    '@nuxt/typescript-build',
+    // '@nuxtjs/stylelint-module',
+    '@nuxtjs/dotenv',
+    //'@nuxtjs/firebase',
+    '@nuxt/components',
   ],
   /*
   ** Axios module configuration
@@ -73,5 +100,6 @@ export default {
     extend(config, ctx) {
     },
     babel: { compact: true }
-  }
+  },
+  // server: { host: '0.0.0.0', port: 3000 },
 }

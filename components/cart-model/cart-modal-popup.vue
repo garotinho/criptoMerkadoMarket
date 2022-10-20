@@ -24,7 +24,7 @@
               <h5>
                 <i class="fa fa-check"></i>Item
                 <span>{{productData.title}}</span>
-                <span>successfully added to your Cart.</span>
+                <span>successfully added to your Cart. 1</span>
               </h5>
               <div class="buttons d-flex justify-content-center">
                 <nuxt-link
@@ -67,10 +67,10 @@
                         <nuxt-link :to="{ path: '/product/sidebar/'+product.id}">
                           <h6>{{ product.title }}</h6>
                         </nuxt-link>
-                        <h4 v-if="product.sale">{{ discountedPrice(product) * curr.curr | currency(curr.symbol) }}
-                          <del>{{ product.price * curr.curr | currency(curr.symbol) }}</del>
+                        <h4 v-if="product.sale">{{ currency(discountedPrice(product) * curr.curr, curr.symbol) }}
+                          <del>{{ currency(product.price * curr.curr, curr.symbol) }}</del>
                         </h4>
-                        <h4 v-else>{{ product.price * curr.curr | currency(curr.symbol) }}</h4>
+                        <h4 v-else>{{ currency(product.price * curr.curr, curr.symbol) }}</h4>
                       </div>
                     </div>
                   </div>
@@ -81,39 +81,73 @@
     </b-modal>
   </div>
 </template>
-<script>
+<script lang="ts">
+import { Vue, Component, Prop, Emit } from 'nuxt-property-decorator'
 import { mapState, mapGetters } from 'vuex'
-export default {
-  props: ['openCart', 'productData', 'products', 'category'],
-  computed: {
-    ...mapState({
-      currency: state => state.products.currency
-    }),
-    ...mapGetters({
-      curr: 'products/changeCurrency'
-    })
-  },
-  methods: {
-    // Get Image Url
-    getImgUrl(path) {
-      return require('@/assets/images/' + path)
-    },
-    closeCart(val) {
-      val = false
-      this.$emit('closeCart', val)
-    },
-    cartRelatedProducts(collection, id) {
-      return this.products.filter((item) => {
-        if (item.collection.find(i => i === collection)) {
-          if (item.id !== id) {
-            return item
-          }
-        }
-      })
-    },
-    discountedPrice(product) {
-      return product.price - (product.price * product.discount / 100)
-    }
+import { ProductModel } from '~/static/models/ProductModel';
+@Component({
+  components: {}
+})
+export default class CardModalPopup extends Vue {
+  @Prop({ type: Boolean, required: true }) openCart!: boolean
+  @Prop({ type: Object, required: true }) productData!: ProductModel
+  @Prop({ type: Array, required: true }) products!: ProductModel[]
+  @Prop({ type: Array, required: true }) category!: any[]
+  
+  currency(amount: number, symbol: string) { return `${symbol}${amount.toFixed(2)}` }
+
+  get curr() { return this.$store.state.product.currency || {} }
+  getImgUrl(path: string) { return require('@/assets/images/' + path) }
+
+  @Emit()
+  closeCart(val: boolean) {
+    val = false
+    this.$emit('closeCart', val)
   }
+
+  @Emit()
+  cartRelatedProducts(collection: string, id: string) {
+    return this.products.filter((item) => {
+      if (item.collection.find(i => i === collection)) {
+        if (item.id !== id) {
+          return item
+        }
+      }
+    })
+  }
+
+  @Emit()
+  discountedPrice(product: ProductModel) { return product.price - (product.price * product.discount / 100) }
+  // props: ['openCart', 'productData', 'products', 'category'],
+  // computed: {
+  //   ...mapState({
+  //     currency: state => state.products.currency
+  //   }),
+  //   ...mapGetters({
+  //     curr: 'products/changeCurrency'
+  //   })
+  // },
+  // methods: {
+  //   // Get Image Url
+  //   getImgUrl(path) {
+  //     return require('@/assets/images/' + path)
+  //   },
+  //   closeCart(val) {
+  //     val = false
+  //     this.$emit('closeCart', val)
+  //   },
+  //   cartRelatedProducts(collection, id) {
+  //     return this.products.filter((item) => {
+  //       if (item.collection.find(i => i === collection)) {
+  //         if (item.id !== id) {
+  //           return item
+  //         }
+  //       }
+  //     })
+  //   },
+  //   discountedPrice(product) {
+  //     return product.price - (product.price * product.discount / 100)
+  //   }
+  // }
 }
 </script>
